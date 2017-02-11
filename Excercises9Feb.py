@@ -24,3 +24,17 @@ def createCycleGraph():
 print("n Cycle")
 print (createCycleGraph())
 
+
+def createCompleteGraph(object):
+    G = object
+    for i in G.vertices:
+        for v in G.vertices:
+            if i != v and not G.is_adjacent(i, v):
+                e = Edge(i, v)
+                G.add_edge(e)
+    return G
+
+print("Complete Graph")
+print(createCompleteGraph())
+
+

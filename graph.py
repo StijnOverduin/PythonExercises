@@ -319,10 +319,51 @@ class Graph(object):
         :param other: Graph to add to `self'.
         :return: New graph which is a disjoint union of `self' and `other'.
         """
-        vertices = {self.vertices: self.edges, Graph.vertices: Graph.edges}
-        self.vertices = vertices
-        return self
+        G = Graph(self.directed)
+        done = {
 
+        }
+        if self.connected == other.connected:
+            for e in Graph.edges:
+                if e.head not in done:
+                    u = Vertex(G, e.head)
+                    G.add_vertex(u)
+                    done[e.head] = u
+
+                if e.tail not in done:
+                    v = Vertex(G, e.tail)
+                    G.add_vertex(v)
+                    done[e.tail] = v
+
+                G.add_edge(Edge(e.tail, e.head))
+
+            for t in self.vertices:
+                if t not in done:
+                    s = Vertex(G)
+                    G.add_vertex(s)
+                    done[t] = s
+
+            for e2 in other.edges:
+                if e2.head not in done:
+                    u = Vertex(G, e2.head)
+                    G.add_vertex(u)
+                    done[e2.head] = u
+
+                if e2.tail not in done:
+                    v = Vertex(G, e2.tail)
+                    G.add_vertex(v)
+                    done[e.tail] = v
+
+                G.add_edge(Edge(done(e2.tail), done(e2.head)))
+
+                for t2 in other.vertices:
+                    if t2 not in done:
+                        s2 = Vertex(G)
+                        G.add_vertex(s2)
+                        done[t2] = s2
+            return G
+        else:
+            raise GraphError("One of these graphs is not directed")
 
 
     def __iadd__(self, other: Union[Edge, Vertex]) -> "Graph":
