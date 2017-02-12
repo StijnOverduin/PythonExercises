@@ -1,14 +1,12 @@
 from graph import*
 
-def createGraph():
-    G = Graph(False, 4)
+def createGraph(n):
+    G = Graph(False, int(n))
     for i in range(0, len(G.vertices) - 1):
         u = Edge(G.vertices[i], G.vertices[i+1])
         G += u
     return G
 
-print("n Graph: n-1 length")
-print(createGraph())
 
 def createCycleGraph():
     G = Graph(False, 4)
@@ -21,8 +19,6 @@ def createCycleGraph():
             G += u
     return G
 
-print("n Cycle")
-print (createCycleGraph())
 
 
 def createCompleteGraph(object):
@@ -33,8 +29,5 @@ def createCompleteGraph(object):
                 e = Edge(i, v)
                 G.add_edge(e)
     return G
-
-print("Complete Graph")
-print(createCompleteGraph())
 
 
